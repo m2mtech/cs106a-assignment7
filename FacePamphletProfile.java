@@ -103,7 +103,7 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * associated with the profile.
 	 */ 
 	public Iterator<String> getFriends() {
-		return friends.keySet().iterator();
+		return friends.values().iterator();
 	}
 	
 	/** 
@@ -122,7 +122,7 @@ public class FacePamphletProfile implements FacePamphletConstants {
 		String next = ": ";
 		Iterator<String> it = getFriends();
 		while (it.hasNext()) {
-			result += next + friends.get(it.next());
+			result += next + it.next();
 			next = ", ";
 		}		
 		return result;

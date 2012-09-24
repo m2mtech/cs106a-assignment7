@@ -167,11 +167,10 @@ implements FacePamphletConstants {
 					if (image != null) {
 						profile.setImage(image);
 						println("Picture updated to " + filename);
-						println("--> Current profile: " + profile);
 					} else {
 						println("Please use a valid picture");
-						println("--> Current profile: " + profile);
 					}
+					println("--> Current profile: " + profile);
 				} else {
 					println("Please select profile to change picture");
 					println("--> No current profile");
@@ -179,7 +178,23 @@ implements FacePamphletConstants {
 			}    		
 		} else if ((source == friendField) || (source == friendButton)) {
 			if (!emptyTextField(friendField)) {
-				println("Add Friend: " + friendField.getText());
+				if (profile != null) {
+					String friend = friendField.getText();
+					if (data.containsProfile(friend)) {
+						if (profile.addFriend(friend)) {
+							data.getProfile(friend).addFriend(profile.getName());
+							println(friend + " added as friend");
+						} else {
+							println("Friend with name " + friend + " already exists");
+						}
+					} else {
+						println("profile with name " + friend + " does not exist");
+					}
+					println("--> Current profile: " + profile);
+				} else {
+					println("Please select profile to add friend");
+					println("--> No current profile");					
+				}
 			}    		    		
 		}
 	}

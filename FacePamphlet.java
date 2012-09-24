@@ -111,6 +111,7 @@ public class FacePamphlet extends ConsoleProgram
     				data.addProfile(profile);
     				println("Add: new profile: " + profile);
     			}
+    			println("--> Current profile: " + profile);
     		}    		
     	} else if (source == deleteButton) {
     		if (!emptyTextField(nameField)) {
@@ -124,6 +125,7 @@ public class FacePamphlet extends ConsoleProgram
     				println("Delete: profile with name " + name + " does not exist");
     			}
     			profile = null;
+    			println("--> No current profile");
     		}    		    		
     	} else if (source == lookupButton) {
     		if (!emptyTextField(nameField)) {
@@ -133,14 +135,24 @@ public class FacePamphlet extends ConsoleProgram
     			if (data.containsProfile(name)) {
     				profile = data.getProfile(name);
     				println("Lookup: " + profile);
+        			println("--> Current profile: " + profile);
     			} else {
     				println("Lookup: profile with name " + name + " does not exist");
     				profile = null;
+    				println("--> No current profile");
     			}
     		}    		    		
     	} else if ((source == statusField) || (source == statusButton)) {
-    		if (!emptyTextField(statusField)) {
-    			println("Change Status: " + statusField.getText());
+    		if (!emptyTextField(statusField)) {    			
+    			if (profile != null) {
+    				String status = statusField.getText();
+    				profile.setStatus(status);
+    				println("Status updated to " + status);
+    				println("--> Current profile: " + profile);
+    			} else {
+    				println("Please select profile to change status");
+    				println("--> No current profile");
+    			}    			
     		}    		
     	} else if ((source == pictureField) || (source == pictureButton)) {
     		if (!emptyTextField(pictureField)) {

@@ -19,7 +19,7 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	private String name;
 	private String status;
 	private GImage image;
-	private ArrayList<String> friends;
+	private HashMap<String,String> friends;
 	
 	/** 
 	 * Constructor
@@ -32,7 +32,7 @@ public class FacePamphletProfile implements FacePamphletConstants {
 		this.name = name;
 		status = "";
 		image = null;
-		friends = new ArrayList<String>();
+		friends = new HashMap<String,String>();
 	}
 
 	/** This method returns the name associated with the profile. */ 
@@ -77,8 +77,9 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * a second time.)
 	 */
 	public boolean addFriend(String friend) {
-		if (friends.contains(friend)) return false;
-		friends.add(friend);
+		String key = friend.toLowerCase();
+		if (friends.containsKey(key)) return false;
+		friends.put(key, friend);
 		return true;
 	}
 
@@ -91,8 +92,9 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * the given friend name could not be removed.)
 	 */
 	public boolean removeFriend(String friend) {
-		if (!friends.contains(friend)) return false;
-		friends.remove(friend);
+		String key = friend.toLowerCase();
+		if (!friends.containsKey(key)) return false;
+		friends.remove(key);
 		return true;
 	}
 
@@ -101,7 +103,7 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * associated with the profile.
 	 */ 
 	public Iterator<String> getFriends() {
-		return friends.iterator();
+		return friends.keySet().iterator();
 	}
 	
 	/** 
@@ -116,12 +118,11 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * would return the string: "Alice (coding): Don, Chelsea, Bob"
 	 */ 
 	public String toString() {
-		// "Alice (coding): Don, Chelsea, Bob"
 		String result = getName() + " (" + getStatus() + ")";
 		String next = ": ";
 		Iterator<String> it = getFriends();
 		while (it.hasNext()) {
-			result += next + it.next();
+			result += next + friends.get(it.next());
 			next = ", ";
 		}		
 		return result;

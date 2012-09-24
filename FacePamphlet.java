@@ -28,6 +28,8 @@ public class FacePamphlet extends ConsoleProgram
 	private JButton pictureButton;
 	private JTextField friendField;
 	private JButton friendButton;
+	
+	private FacePamphletDatabase data;
 
 	
 	/**
@@ -36,6 +38,8 @@ public class FacePamphlet extends ConsoleProgram
 	 * initialization that needs to be performed.
 	 */
 	public void init() {
+		data = new FacePamphletDatabase();
+		
 		add(new JLabel("Name:"), NORTH);
 		nameField = new JTextField(TEXT_FIELD_SIZE);
 		add(nameField, NORTH);
@@ -68,7 +72,6 @@ public class FacePamphlet extends ConsoleProgram
 		
 		addActionListeners();
 	}
-    
   
     /**
      * This class is responsible for detecting when the buttons are
@@ -79,7 +82,7 @@ public class FacePamphlet extends ConsoleProgram
     	Object source = e.getSource();
     	if (source == addButton) {
     		if (!emptyTextField(nameField)) {
-    			println("Add: " + nameField.getText());
+    			/*println("Add: " + nameField.getText());
     			FacePamphletProfile testDummy = new FacePamphletProfile(nameField.getText());
     			println(testDummy);
     			testDummy.setStatus("coding");
@@ -95,15 +98,38 @@ public class FacePamphlet extends ConsoleProgram
     			testDummy.addFriend("Mehran");
     			println(testDummy);
     			testDummy.removeFriend("Mehran");
-    			println(testDummy);
+    			println(testDummy);*/
+    			
+    			String name = nameField.getText();
+    			if (data.containsProfile(name)) {
+    				println("Add: profile for " + name + " already exists: " + data.getProfile(name));
+    			} else {
+    				data.addProfile(new FacePamphletProfile(name));
+    				println("Add: new profile: " + data.getProfile(name));
+    			}
     		}    		
     	} else if (source == deleteButton) {
     		if (!emptyTextField(nameField)) {
-    			println("Delete: " + nameField.getText());    			
+    			//println("Delete: " + nameField.getText());
+    			
+    			String name = nameField.getText();
+    			if (data.containsProfile(name)) {
+    				data.deleteProfile(name);
+    				println("Delete: profile of " + name + " deleted");
+    			} else {
+    				println("Delete: profile with name " + name + " does not exist");
+    			}
     		}    		    		
     	} else if (source == lookupButton) {
     		if (!emptyTextField(nameField)) {
-    			println("Lookup: " + nameField.getText());
+    			//println("Lookup: " + nameField.getText());
+    			
+    			String name = nameField.getText();
+    			if (data.containsProfile(name)) {
+    				println("Lookup: " + data.getProfile(name));
+    			} else {
+    				println("Lookup: profile with name " + name + " does not exist");
+    			}
     		}    		    		
     	} else if ((source == statusField) || (source == statusButton)) {
     		if (!emptyTextField(statusField)) {

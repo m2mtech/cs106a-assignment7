@@ -30,6 +30,7 @@ public class FacePamphlet extends ConsoleProgram
 	private JButton friendButton;
 	
 	private FacePamphletDatabase data;
+	private FacePamphletProfile profile;
 
 	
 	/**
@@ -39,6 +40,7 @@ public class FacePamphlet extends ConsoleProgram
 	 */
 	public void init() {
 		data = new FacePamphletDatabase();
+		profile = null;
 		
 		add(new JLabel("Name:"), NORTH);
 		nameField = new JTextField(TEXT_FIELD_SIZE);
@@ -102,10 +104,12 @@ public class FacePamphlet extends ConsoleProgram
     			
     			String name = nameField.getText();
     			if (data.containsProfile(name)) {
-    				println("Add: profile for " + name + " already exists: " + data.getProfile(name));
+    				profile = data.getProfile(name);
+    				println("Add: profile for " + name + " already exists: " + profile);
     			} else {
-    				data.addProfile(new FacePamphletProfile(name));
-    				println("Add: new profile: " + data.getProfile(name));
+    				profile = new FacePamphletProfile(name);
+    				data.addProfile(profile);
+    				println("Add: new profile: " + profile);
     			}
     		}    		
     	} else if (source == deleteButton) {
@@ -119,6 +123,7 @@ public class FacePamphlet extends ConsoleProgram
     			} else {
     				println("Delete: profile with name " + name + " does not exist");
     			}
+    			profile = null;
     		}    		    		
     	} else if (source == lookupButton) {
     		if (!emptyTextField(nameField)) {
@@ -126,9 +131,11 @@ public class FacePamphlet extends ConsoleProgram
     			
     			String name = nameField.getText();
     			if (data.containsProfile(name)) {
-    				println("Lookup: " + data.getProfile(name));
+    				profile = data.getProfile(name);
+    				println("Lookup: " + profile);
     			} else {
     				println("Lookup: profile with name " + name + " does not exist");
+    				profile = null;
     			}
     		}    		    		
     	} else if ((source == statusField) || (source == statusButton)) {

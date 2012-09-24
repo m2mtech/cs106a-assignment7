@@ -12,7 +12,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class FacePamphlet extends ConsoleProgram 
-					implements FacePamphletConstants {
+implements FacePamphletConstants {
 
 	/**
 	 * private instance variables
@@ -28,11 +28,11 @@ public class FacePamphlet extends ConsoleProgram
 	private JButton pictureButton;
 	private JTextField friendField;
 	private JButton friendButton;
-	
+
 	private FacePamphletDatabase data;
 	private FacePamphletProfile profile;
 
-	
+
 	/**
 	 * This method has the responsibility for initializing the 
 	 * interactors in the application, and taking care of any other 
@@ -41,7 +41,7 @@ public class FacePamphlet extends ConsoleProgram
 	public void init() {
 		data = new FacePamphletDatabase();
 		profile = null;
-		
+
 		add(new JLabel("Name:"), NORTH);
 		nameField = new JTextField(TEXT_FIELD_SIZE);
 		add(nameField, NORTH);
@@ -71,20 +71,20 @@ public class FacePamphlet extends ConsoleProgram
 		add(friendField, WEST);
 		friendButton = new JButton("Add Friend");
 		add(friendButton, WEST);
-		
+
 		addActionListeners();
 	}
-  
-    /**
-     * This class is responsible for detecting when the buttons are
-     * clicked or interactors are used, so you will have to add code
-     * to respond to these actions.
-     */
-    public void actionPerformed(ActionEvent e) {
-    	Object source = e.getSource();
-    	if (source == addButton) {
-    		if (!emptyTextField(nameField)) {
-    			/*println("Add: " + nameField.getText());
+
+	/**
+	 * This class is responsible for detecting when the buttons are
+	 * clicked or interactors are used, so you will have to add code
+	 * to respond to these actions.
+	 */
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if (source == addButton) {
+			if (!emptyTextField(nameField)) {
+				/*println("Add: " + nameField.getText());
     			FacePamphletProfile testDummy = new FacePamphletProfile(nameField.getText());
     			println(testDummy);
     			testDummy.setStatus("coding");
@@ -101,72 +101,91 @@ public class FacePamphlet extends ConsoleProgram
     			println(testDummy);
     			testDummy.removeFriend("Mehran");
     			println(testDummy);*/
-    			
-    			String name = nameField.getText();
-    			if (data.containsProfile(name)) {
-    				profile = data.getProfile(name);
-    				println("Add: profile for " + name + " already exists: " + profile);
-    			} else {
-    				profile = new FacePamphletProfile(name);
-    				data.addProfile(profile);
-    				println("Add: new profile: " + profile);
-    			}
-    			println("--> Current profile: " + profile);
-    		}    		
-    	} else if (source == deleteButton) {
-    		if (!emptyTextField(nameField)) {
-    			//println("Delete: " + nameField.getText());
-    			
-    			String name = nameField.getText();
-    			if (data.containsProfile(name)) {
-    				data.deleteProfile(name);
-    				println("Delete: profile of " + name + " deleted");
-    			} else {
-    				println("Delete: profile with name " + name + " does not exist");
-    			}
-    			profile = null;
-    			println("--> No current profile");
-    		}    		    		
-    	} else if (source == lookupButton) {
-    		if (!emptyTextField(nameField)) {
-    			//println("Lookup: " + nameField.getText());
-    			
-    			String name = nameField.getText();
-    			if (data.containsProfile(name)) {
-    				profile = data.getProfile(name);
-    				println("Lookup: " + profile);
-        			println("--> Current profile: " + profile);
-    			} else {
-    				println("Lookup: profile with name " + name + " does not exist");
-    				profile = null;
-    				println("--> No current profile");
-    			}
-    		}    		    		
-    	} else if ((source == statusField) || (source == statusButton)) {
-    		if (!emptyTextField(statusField)) {    			
-    			if (profile != null) {
-    				String status = statusField.getText();
-    				profile.setStatus(status);
-    				println("Status updated to " + status);
-    				println("--> Current profile: " + profile);
-    			} else {
-    				println("Please select profile to change status");
-    				println("--> No current profile");
-    			}    			
-    		}    		
-    	} else if ((source == pictureField) || (source == pictureButton)) {
-    		if (!emptyTextField(pictureField)) {
-    			println("Change Picture: " + pictureField.getText());    			
-    		}    		
-    	} else if ((source == friendField) || (source == friendButton)) {
-    		if (!emptyTextField(friendField)) {
-    			println("Add Friend: " + friendField.getText());
-    		}    		    		
-    	}
+
+				String name = nameField.getText();
+				if (data.containsProfile(name)) {
+					profile = data.getProfile(name);
+					println("Add: profile for " + name + " already exists: " + profile);
+				} else {
+					profile = new FacePamphletProfile(name);
+					data.addProfile(profile);
+					println("Add: new profile: " + profile);
+				}
+				println("--> Current profile: " + profile);
+			}    		
+		} else if (source == deleteButton) {
+			if (!emptyTextField(nameField)) {
+				//println("Delete: " + nameField.getText());
+
+				String name = nameField.getText();
+				if (data.containsProfile(name)) {
+					data.deleteProfile(name);
+					println("Delete: profile of " + name + " deleted");
+				} else {
+					println("Delete: profile with name " + name + " does not exist");
+				}
+				profile = null;
+				println("--> No current profile");
+			}    		    		
+		} else if (source == lookupButton) {
+			if (!emptyTextField(nameField)) {
+				//println("Lookup: " + nameField.getText());
+
+				String name = nameField.getText();
+				if (data.containsProfile(name)) {
+					profile = data.getProfile(name);
+					println("Lookup: " + profile);
+					println("--> Current profile: " + profile);
+				} else {
+					println("Lookup: profile with name " + name + " does not exist");
+					profile = null;
+					println("--> No current profile");
+				}
+			}    		    		
+		} else if ((source == statusField) || (source == statusButton)) {
+			if (!emptyTextField(statusField)) {    			
+				if (profile != null) {
+					String status = statusField.getText();
+					profile.setStatus(status);
+					println("Status updated to " + status);
+					println("--> Current profile: " + profile);
+				} else {
+					println("Please select profile to change status");
+					println("--> No current profile");
+				}    			
+			}    		
+		} else if ((source == pictureField) || (source == pictureButton)) {
+			if (!emptyTextField(pictureField)) {
+				if (profile != null) {
+					String filename = pictureField.getText();    			
+					GImage image = null;
+					try {
+						image = new GImage(filename);
+					} catch (ErrorException ex) {
+						// Code that is executed if the filename cannot be opened. 
+					}
+					if (image != null) {
+						profile.setImage(image);
+						println("Picture updated to " + filename);
+						println("--> Current profile: " + profile);
+					} else {
+						println("Please use a valid picture");
+						println("--> Current profile: " + profile);
+					}
+				} else {
+					println("Please select profile to change picture");
+					println("--> No current profile");
+				}    			
+			}    		
+		} else if ((source == friendField) || (source == friendButton)) {
+			if (!emptyTextField(friendField)) {
+				println("Add Friend: " + friendField.getText());
+			}    		    		
+		}
 	}
-    
-    private boolean emptyTextField(JTextField field) {
-    	return field.getText().equals("");
-    }
+
+	private boolean emptyTextField(JTextField field) {
+		return field.getText().equals("");
+	}
 
 }

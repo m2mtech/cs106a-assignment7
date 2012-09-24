@@ -80,6 +80,22 @@ public class FacePamphlet extends ConsoleProgram
     	if (source == addButton) {
     		if (!emptyTextField(nameField)) {
     			println("Add: " + nameField.getText());
+    			FacePamphletProfile testDummy = new FacePamphletProfile(nameField.getText());
+    			println(testDummy);
+    			testDummy.setStatus("coding");
+    			println(testDummy);
+    			testDummy.addFriend("Don");
+    			println(testDummy);
+    			testDummy.addFriend("Chelsea");
+    			println(testDummy);
+    			testDummy.addFriend("Bob");
+    			println(testDummy);
+    			testDummy.addFriend("Don");
+    			println(testDummy);
+    			testDummy.addFriend("Mehran");
+    			println(testDummy);
+    			testDummy.removeFriend("Mehran");
+    			println(testDummy);
     		}    		
     	} else if (source == deleteButton) {
     		if (!emptyTextField(nameField)) {
